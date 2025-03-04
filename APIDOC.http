@@ -1,13 +1,55 @@
 #API for creating account for user
 
+###
+POST http://127.0.0.1:8000/api/users/
+Content-Type: application/json
+
+{
+    "username":"django",
+    "email":"django@gmail.com",
+    "password":"django"
+}
+
 #Api for create a new post
+###
+POST http://127.0.0.1:8000/api/posts/
+Content-Type: application/json
+Authorization: Basic django:django
+
+{
+  "title":"gm5",
+  "description":"good morning wold"
+}
 
 # API for list all posts
 
+###
+GET  http://127.0.0.1:8000/api/posts/
+Authorization: Basic django:django
+
+
 # API for fetching post detail
+###
+GET  http://127.0.0.1:8000/api/posts/2/
+Authorization: Basic django:django
+
 
 # Api for updating a post
 
 # Api for deleting a post
+
+
+#Api for adding comment
+
+###
+POST http://127.0.0.1:8000/api/posts/2/comments/
+Content-Type: application/json
+Authorization: Basic django:django
+
+{
+    "message":"good blog"
+   
+}
+
 
 

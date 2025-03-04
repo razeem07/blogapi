@@ -22,3 +22,15 @@ class Post(models.Model):
 
 
 
+class Comment(models.Model):
+
+    post_object=models.ForeignKey(Post,on_delete=models.CASCADE,related_name="comments")
+
+    owner=models.ForeignKey(User,on_delete=models.CASCADE)
+
+    message=models.TextField()
+
+    created_at=models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return self.message
