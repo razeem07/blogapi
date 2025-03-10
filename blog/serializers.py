@@ -29,6 +29,10 @@ class PostSerializers(serializers.ModelSerializer):
 
     comment_count=serializers.SerializerMethodField()
 
+    comments=serializers.SerializerMethodField(read_only=True)
+
+    likes=serializers.SerializerMethodField(read_only=True)
+
    # comment_count=serializers.SerializerMethodField()
 
 
@@ -38,15 +42,33 @@ class PostSerializers(serializers.ModelSerializer):
 
         fields="__all__"
 
-        read_only_fields=["id","created_at","owner"]
+        read_only_fields=["id","created_at","owner","liked_by"]
 
     def get_comment_count(self,obj):
 
         return Comment.objects.filter(post_object=obj).count()
+    
+    def get_comments(self,obj):
+
+        post_comments = Comment.objects.filter(post_object=obj)
+
+        serializer_instance=CommentSerializer(post_comments,many=True)
+
+        return serializer_instance.data
+    
+
+    def get_likes(self,obj):
+         
+         return obj.liked_by.all().count()
+
 
     def get_greetings(self,obj):
 
          return "good morning"
+    
+
+
+
          
 class CommentSerializer(serializers.ModelSerializer):
 

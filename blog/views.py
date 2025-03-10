@@ -23,7 +23,7 @@ class UserCreateView(CreateAPIView):
 
 class PostListCreateView(ListAPIView,CreateAPIView):
       
-      authentication_classes=[authentication.BasicAuthentication]
+      authentication_classes=[authentication.TokenAuthentication]
 
       permission_classes=[permissions.IsAuthenticated]
 
@@ -38,7 +38,7 @@ class PostListCreateView(ListAPIView,CreateAPIView):
 
 class PostRetrieveUpdateDestroyView(RetrieveAPIView,UpdateAPIView,DestroyAPIView):
      
-     authentication_classes=[authentication.BasicAuthentication]
+     authentication_classes=[authentication.TokenAuthentication]
 
      permission_classes=[permissions.IsAuthenticated]
 
@@ -51,7 +51,7 @@ class CommentCreateView(CreateAPIView):
      
      serializer_class=CommentSerializer
 
-     authentication_classes=[authentication.BasicAuthentication]
+     authentication_classes=[authentication.TokenAuthentication]
 
      permission_classes=[permissions.IsAuthenticated]
 
@@ -63,3 +63,28 @@ class CommentCreateView(CreateAPIView):
           post_instance=get_object_or_404(Post,id=id)
 
           serializer.save(post_object=post_instance,owner=self.request.user)
+
+
+class PostLikeView(APIView):
+
+     authentication_classes=[authentication.TokenAuthentication]
+
+     permission_classes=[permissions.IsAuthenticated]
+
+     def post(self,request,*args,**kwargs):
+
+          id=kwargs.get("pk")
+
+          post_object = get_object_or_404(Post,id=id)
+
+          if request.user in post_object.liked_by.all():
+
+              post_object.liked_by.remove(request.user)
+ 
+              return Response(data={"message":"liked"})
+          
+          else:
+
+              post_object.liked_by.add(request.user)
+ 
+              return Response(data={"message":"liked"})

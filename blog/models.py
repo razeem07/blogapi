@@ -17,6 +17,8 @@ class Post(models.Model):
 
     created_at=models.DateTimeField(auto_now_add=True)
 
+    liked_by=models.ManyToManyField(User)
+
     def __str__(self):
         return self.title
 

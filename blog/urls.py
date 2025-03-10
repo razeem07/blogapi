@@ -2,6 +2,8 @@ from django.urls import path
 
 from blog import views
 
+from rest_framework.authtoken.views import ObtainAuthToken
+
 
 
 urlpatterns=[
@@ -13,6 +15,14 @@ urlpatterns=[
     path("posts/<int:pk>/",views.PostRetrieveUpdateDestroyView.as_view()),
 
     path("posts/<int:pk>/comments/",views.CommentCreateView.as_view()),
+
+    path("token/",ObtainAuthToken.as_view()),
+
+    path("posts/<int:pk>/add-like/",views.PostLikeView.as_view()),
+
+
+
+
 
 
     

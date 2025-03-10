@@ -25,13 +25,13 @@ Authorization: Basic django:django
 
 ###
 GET  http://127.0.0.1:8000/api/posts/
-Authorization: Basic django:django
+Authorization: Token 1d0346f0dc9936dafa1bcdf5d64f043226b690b0
 
 
 # API for fetching post detail
 ###
 GET  http://127.0.0.1:8000/api/posts/2/
-Authorization: Basic django:django
+Authorization: Token 1d0346f0dc9936dafa1bcdf5d64f043226b690b0
 
 
 # Api for updating a post
@@ -50,6 +50,24 @@ Authorization: Basic django:django
     "message":"good blog"
    
 }
+
+
+
+#api for token authentication
+
+###
+POST http://127.0.0.1:8000/api/token/
+Content-Type: application/json
+
+{
+    "username":"django",
+    "password":"django"
+}
+
+###
+POST http://127.0.0.1:8000/api/posts/2/add-like/
+Authorization: Token 1d0346f0dc9936dafa1bcdf5d64f043226b690b0
+
 
 
 
